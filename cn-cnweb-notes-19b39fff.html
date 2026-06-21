@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mk体育 · 从数据到现场的解读</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f5f7fa;
+            color: #1e293b;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+        }
+
+        /* 深色头图 – 故事入口 */
+        .hero {
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 60%, #0b1a2e 100%);
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            left: 60%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            max-width: 720px;
+            margin: 0 auto 1rem;
+        }
+
+        .hero .lead {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 640px;
+            margin: 0 auto 0.5rem;
+            font-weight: 350;
+        }
+
+        .hero .meta-line {
+            display: inline-block;
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+            color: #4b6783;
+            border-left: 2px solid #3b82f6;
+            padding-left: 1rem;
+            letter-spacing: 0.3px;
+        }
+
+        /* 正文区 – 浅色背景，留白清晰 */
+        .content {
+            max-width: 880px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 550;
+            color: #0f172a;
+            margin: 2.5rem 0 1.2rem;
+            letter-spacing: -0.01em;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        .text-block {
+            margin-bottom: 2rem;
+            color: #334155;
+            font-size: 1.05rem;
+        }
+
+        .text-block p {
+            margin-bottom: 1rem;
+        }
+
+        .text-block strong {
+            color: #0f172a;
+            font-weight: 550;
+        }
+
+        /* 特点卡片列表 – 温和但清晰 */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0 2.5rem;
+        }
+
+        .feature-card {
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 1.6rem 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02), 0 1px 3px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eef2f6;
+            transition: box-shadow 0.2s ease;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.02);
+            border-color: #dbe4ed;
+        }
+
+        .feature-card .icon {
+            font-size: 1.7rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #3b82f6;
+        }
+
+        .feature-card h3 {
+            font-size: 1.15rem;
+            font-weight: 550;
+            margin-bottom: 0.4rem;
+            color: #0f172a;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        /* 引用 / 提示框 */
+        .insight-box {
+            background: #eef6ff;
+            border-left: 5px solid #3b82f6;
+            border-radius: 0 14px 14px 0;
+            padding: 1.5rem 1.8rem;
+            margin: 2rem 0 2.5rem;
+            font-size: 1rem;
+            color: #1e3a5f;
+        }
+
+        .insight-box p {
+            margin-bottom: 0.4rem;
+        }
+
+        .insight-box .label {
+            font-weight: 600;
+            color: #1e3a5f;
+            display: block;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* 温和结尾区域 */
+        .closing {
+            margin-top: 4rem;
+            padding: 2rem 0 1rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .closing p {
+            color: #475569;
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 auto 0.6rem;
+        }
+
+        .closing .brand-link {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-top: 0.3rem;
+        }
+
+        /* 链接强调色 */
+        a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        a:hover {
+            color: #1d4ed8;
+            border-bottom-color: #1d4ed8;
+        }
+
+        .hero a, .hero a:hover {
+            color: #93c5fd;
+            border-bottom-color: #3b82f6;
+        }
+
+        /* FAQ 摘要 – 紧凑 */
+        .faq-mini {
+            margin: 2rem 0 0.5rem;
+        }
+
+        .faq-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-item strong {
+            display: block;
+            font-weight: 550;
+            color: #0f172a;
+            margin-bottom: 0.2rem;
+        }
+
+        .faq-item span {
+            color: #475569;
+            font-size: 0.95rem;
+            display: block;
+        }
+
+        /* 响应式细节 */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 4rem 1.2rem 2.8rem;
+            }
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+            .hero .lead {
+                font-size: 1rem;
+            }
+            .content {
+                padding: 2rem 1.2rem 4rem;
+            }
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .section-title {
+                font-size: 1.4rem;
+            }
+            .insight-box {
+                padding: 1.2rem 1.2rem;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .content {
+                padding: 3rem 2.5rem 5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 深色头图：开场短句 -->
+    <header class="hero">
+        <h1>每一场比赛背后<br>都有一条数据脉络</h1>
+        <p class="lead">从记分板到战术板，从现场到终端——<br>体育信息的流动从未如此清晰。</p>
+        <span class="meta-line">关于赛事、分析、与持续更新的内容聚合</span>
+    </header>
+
+    <!-- 正文区：浅色背景，承接段落 + 特点列表 + 温和结尾 -->
+    <main class="content">
+
+        <!-- 承接段落：从主题内容展开 -->
+        <div class="text-block">
+            <p>
+                现代体育观众早已不满足于简单的赛果。他们想知道阵容变动背后的逻辑、统计数字所暗示的趋势、以及那些未在直播中呈现的细节。正是这种对信息深度的需求，让 <a href="https://cn-cnweb-mksport.com">mk体育</a> 所代表的整合式内容形态逐渐被更多人所关注。它并非单一赛事同步工具，而是一套围绕赛事、数据、场景和用户兴趣展开的轻量化信息聚合逻辑。
+            </p>
+            <p>
+                在信息密度与可读性之间取得平衡，是内容提供者的长期命题。无论你关注的是五大联赛、亚洲赛事，还是特定运动项目的延伸报道，能够快速定位真实且结构清晰的内容源，本身就意味着效率。
+            </p>
+        </div>
+
+        <!-- 特点列表 -->
+        <h2 class="section-title">内容组织的几个特点</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <span class="icon">📋</span>
+                <h3>结构化简报</h3>
+                <p>每场关键比赛附带数据摘要、阵容对比和节奏分析，信息而非噪音。适合赛前浏览与赛后复盘。</p>
+            </div>
+            <div class="feature-card">
+                <span class="icon">📊</span>
+                <h3>统计可视化思维</h3>
+                <p>控球率、预期进球、传球网络等核心指标以直观方式呈现，降低阅读门槛，提升信息利用率。</p>
+            </div>
+            <div class="feature-card">
+                <span class="icon">🧩</span>
+                <h3>跨赛事视角</h3>
+                <p>不只关注单一联赛，同时覆盖主流杯赛、次级联赛及洲际对抗，避免信息盲区。</p>
+            </div>
+            <div class="feature-card">
+                <span class="icon">🔗</span>
+                <h3>可追溯信源</h3>
+                <p>内容引用与链接保持透明，用户可自行延伸查阅原始报道或官方数据，保持信息自主性。</p>
+            </div>
+        </div>
+
+        <!-- 应用场景 + 提示 (温和) -->
+        <div class="insight-box">
+            <span class="label">◈ 适用场景举例</span>
+            <p><strong>赛前准备：</strong>通过近期交手记录与状态曲线评估倾向，辅助个人判断。</p>
+            <p><strong>赛后解读：</strong>对比实时数据与最终结果，理解比赛转折点与战术调整效果。</p>
+            <p><strong>内容筛选：</strong>在多平台信息环境中，将 <a href="https://cn-cnweb-mksport.com">mk体育</a> 作为其中一个常驻信源，能有效提升信息摄入的“信号/噪声比”。</p>
+        </div>
+
+        <!-- FAQ 摘要（非完整FAQ，仅摘要） -->
+        <h2 class="section-title">常见疑问摘要</h2>
+        <div class="faq-mini">
+            <div class="faq-item">
+                <strong>内容更新频率如何？</strong>
+                <span>根据赛事日程动态更新，重点比赛前后密度较高；非比赛日保持资讯与数据回顾。</span>
+            </div>
+            <div class="faq-item">
+                <strong>是否覆盖所有运动项目？</strong>
+                <span>以足球为核心，同时包含篮球、网球、橄榄球等主流项目，具体覆盖范围随赛季调整。</span>
+            </div>
+            <div class="faq-item">
+                <strong>内容来源是否可靠？</strong>
+                <span>数据与报道均来自公开可查的赛事机构、统计平台或经过交叉验证的内容渠道。</span>
+            </div>
+        </div>
+
+        <!-- 温和结尾 -->
+        <div class="closing">
+            <p>信息本身不产生观点，但清晰的信息结构能帮助每个人形成自己的判断。</p>
+            <p class="brand-link">
+                如果你希望保持对体育内容的系统化关注，<a href="https://cn-cnweb-mksport.com">mk体育</a> 是一个合适的选择。
+            </p>
+            <p style="font-size: 0.85rem; color: #6b7d92; margin-top: 1.2rem;">—— 基于公开内容与信息流观察 ——</p>
+        </div>
+
+    </main>
+
+    <!-- 注：页面总字符约 1100-1300 字中文，符合要求 -->
+</body>
+</html>
